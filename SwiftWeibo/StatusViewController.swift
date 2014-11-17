@@ -24,8 +24,12 @@ class StatusViewController: UITableViewController {
 		
 		tableView.rowHeight = UITableViewAutomaticDimension
 		tableView.estimatedRowHeight = 44.0
-		tableView.registerNib(UINib(nibName: "StatusCell", bundle: nil)!, forCellReuseIdentifier: "StatusCell")
-        
+		
+		tableView.registerNib(UINib(nibName: "TextStatusCell", bundle: nil), forCellReuseIdentifier: "TextStatusCell")
+		tableView.registerNib(UINib(nibName: "RTTextStatusCell", bundle: nil), forCellReuseIdentifier: "RTTextStatusCell")
+		tableView.registerNib(UINib(nibName: "ImageStatusCell", bundle: nil), forCellReuseIdentifier: "ImageStatusCell")
+		tableView.registerNib(UINib(nibName: "RTImageStatusCell", bundle: nil), forCellReuseIdentifier: "RTImageStatusCell")
+
         fetchData()
     }
     
@@ -71,8 +75,6 @@ class StatusViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("StatusCell", forIndexPath: indexPath) as StatusCell
-
         // Configure the cell...
 		let status = statuses![indexPath.row] as WBStatus
         
@@ -89,27 +91,33 @@ class StatusViewController: UITableViewController {
                 style.hasImage = true
             }
         }
-        
-        
+
         switch (style) {
         case (false, false):
-            println("1-->\(style)")
-            
+			let cell = tableView.dequeueReusableCellWithIdentifier("TextStatusCell") as TextStatusCell
+			cell.status = status
+			return cell
+			
         case (false, true):
-            println("2-->\(style)")
-            
+			let cell = tableView.dequeueReusableCellWithIdentifier("RTTextStatusCell") as RTTextStatusCell
+			cell.status = status
+			return cell
+			
         case (true, false):
-            println("3-->\(style)")
-            
+			let cell = tableView.dequeueReusableCellWithIdentifier("ImageStatusCell") as ImageStatusCell
+			cell.status = status
+			return cell
+			
         case (true, true):
-            println("4-->\(style)")
-            
+			let cell = tableView.dequeueReusableCellWithIdentifier("RTImageStatusCell") as RTImageStatusCell
+			cell.status = status
+			return cell
+			
         default :
             println("5")
         }
-        cell.status = status
-        
-        return cell
+		
+        return UITableViewCell()
     }
 
     // MARK: - UIScrollViewDelegate
