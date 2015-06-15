@@ -12,7 +12,7 @@ class StatusImageView: UIView {
 
 	var picURLs: NSArray? {
 		didSet {
-			if let URLs = picURLs {
+			if let _ = picURLs {
 				
 			}
 		}

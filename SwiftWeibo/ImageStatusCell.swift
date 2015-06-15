@@ -25,10 +25,10 @@ class ImageStatusCell: UITableViewCell {
 			
 			// text
 			let text = status.text
-			var storage = text.transformText()
+			let storage = text.transformText()
 			
 			let paragraphStyle: NSParagraphStyle = {
-				var paragraphStyle = NSMutableParagraphStyle()
+				let paragraphStyle = NSMutableParagraphStyle()
 				
 				paragraphStyle.lineSpacing = 5
 				paragraphStyle.paragraphSpacing = 15
@@ -44,7 +44,7 @@ class ImageStatusCell: UITableViewCell {
 				paragraphStyle.hyphenationFactor = 2
 				paragraphStyle.paragraphSpacingBefore = 0
 				
-				return paragraphStyle.copy() as NSParagraphStyle
+				return paragraphStyle.copy() as! NSParagraphStyle
 				}()
 			
 			let range = NSMakeRange(0, storage.length)

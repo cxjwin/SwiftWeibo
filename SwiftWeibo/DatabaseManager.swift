@@ -34,7 +34,7 @@ class DatabaseManager: NSObject {
     func checkAndCreateTables() {
         for name in tableNames {
             let sql = "select * from sqlite_master where type='table' and name='\(name)';"
-            let result = database.executeQuery(sql, withArgumentsInArray: NSArray())
+            let result = database.executeQuery(sql, withArgumentsInArray: NSArray() as [AnyObject])
             
             if (name == "login_account" && (result == nil || !result.next())) {
                 createLoginAccountTable()
@@ -47,10 +47,10 @@ class DatabaseManager: NSObject {
     }
     
     func createLoginAccountTable() {
-        println("\(__FUNCTION__)")
+        print("\(__FUNCTION__)")
     }
     
     func createStatusesDataTable() {
-        println("\(__FUNCTION__)")
+        print("\(__FUNCTION__)")
     }
 }

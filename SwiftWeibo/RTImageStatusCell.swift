@@ -26,10 +26,10 @@ class RTImageStatusCell: UITableViewCell {
 			
 			// text
 			let text = status.text
-			var storage = text.transformText()
+			let storage = text.transformText()
 			
 			let paragraphStyle: NSParagraphStyle = {
-				var paragraphStyle = NSMutableParagraphStyle()
+				let paragraphStyle = NSMutableParagraphStyle()
 				
 				paragraphStyle.lineSpacing = 5
 				paragraphStyle.paragraphSpacing = 15
@@ -45,7 +45,7 @@ class RTImageStatusCell: UITableViewCell {
 				paragraphStyle.hyphenationFactor = 2
 				paragraphStyle.paragraphSpacingBefore = 0
 				
-				return paragraphStyle.copy() as NSParagraphStyle
+				return paragraphStyle.copy() as! NSParagraphStyle
 				}()
 			
 			let range = NSMakeRange(0, storage.length)
@@ -57,7 +57,7 @@ class RTImageStatusCell: UITableViewCell {
 			// retweeted text
 			if let retweetedStatus = status.retweetedStatus {
 				let rtText = retweetedStatus.text
-				var storage = rtText.transformText()
+				let storage = rtText.transformText()
 				
 				let range = NSMakeRange(0, storage.length)
 				storage.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(16), range: range)

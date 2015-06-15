@@ -45,7 +45,7 @@ class CWCoreTextView: UIView, NSLayoutManagerDelegate, UIGestureRecognizerDelega
 	}
 	
 	override func drawRect(rect: CGRect) {
-		if let _textStorage: NSTextStorage = textStorage {
+		if let _: NSTextStorage = textStorage {
 			let glyphRange = layoutManager.glyphRangeForTextContainer(textContainer)
 			let point = layoutManager.locationForGlyphAtIndex(glyphRange.location)
 			layoutManager.drawGlyphsForGlyphRange(glyphRange, atPoint: point)
@@ -72,9 +72,9 @@ class CWCoreTextView: UIView, NSLayoutManagerDelegate, UIGestureRecognizerDelega
 		return size
 	}
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        let touch: UITouch? = touches.anyObject() as? UITouch
-        startPoint = touch!.locationInView(self)
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch: UITouch = touches.first!
+        startPoint = touch.locationInView(self)
         
         var location = startPoint
         let firstPoint = layoutManager.locationForGlyphAtIndex(0)
@@ -85,14 +85,14 @@ class CWCoreTextView: UIView, NSLayoutManagerDelegate, UIGestureRecognizerDelega
         
         if (0.01 < fraction && fraction < 0.99) {
             var effectiveRange: NSRange = kCWInvalidRange
-            var value: AnyObject? = textStorage?.attribute(NSLinkAttributeName, atIndex: index, effectiveRange: &effectiveRange)
+            let value: AnyObject? = textStorage?.attribute(NSLinkAttributeName, atIndex: index, effectiveRange: &effectiveRange)
             if let _value: AnyObject = value {
                 touchRange = effectiveRange
                 layoutManager.touchRange = touchRange
                 layoutManager.isTouched = true
                 
                 NSNotificationCenter.defaultCenter().postNotificationName(kTouchedLinkNotification, object: _value)
-                println("\(_value)")
+                print("\(_value)")
                 setNeedsDisplay()
             } else {
                 touchRange = kCWInvalidRange
@@ -100,9 +100,9 @@ class CWCoreTextView: UIView, NSLayoutManagerDelegate, UIGestureRecognizerDelega
         }
     }
     
-    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
-        let touch: UITouch? = touches.anyObject() as? UITouch
-        let currentPoint = touch!.locationInView(self)
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch: UITouch = touches.first!
+        let currentPoint = touch.locationInView(self)
         
         let distanceX = currentPoint.x - startPoint.x
         let	distanceY = currentPoint.y - startPoint.y
@@ -111,9 +111,10 @@ class CWCoreTextView: UIView, NSLayoutManagerDelegate, UIGestureRecognizerDelega
         if distance > 10.0 {
             touchesCancelled(touches, withEvent: event)
         }
+
     }
     
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if (touchRange.location != NSNotFound) {
             touchRange = kCWInvalidRange
             layoutManager.isTouched = false
@@ -121,7 +122,8 @@ class CWCoreTextView: UIView, NSLayoutManagerDelegate, UIGestureRecognizerDelega
         }
     }
     
-    override func touchesCancelled(touches: NSSet!, withEvent event: UIEvent!) {
+
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         if (touchRange.location != NSNotFound) {
             touchRange = kCWInvalidRange
             layoutManager.isTouched = false

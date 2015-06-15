@@ -43,12 +43,17 @@ class StatusViewController: UITableViewController {
     func fetchData() {
         let path = NSBundle.mainBundle().pathForResource("test_twenty_status", ofType: "json")
         let data = NSData(contentsOfFile: path!)
-        let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers, error: nil)
+        let json: AnyObject?
+        do {
+            json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
+        } catch _ {
+            json = nil
+        }
         
         statuses = NSMutableArray()
         if let _json: NSDictionary = json as? NSDictionary {
             let array = _json["statuses"] as? NSArray
-            for info in array as [NSDictionary] {
+            for info in array as! [NSDictionary] {
                 let status: WBStatus = {
                     let _status = WBStatus()
                     _status.fillInDetailsWithJSONObject(info)
@@ -76,7 +81,7 @@ class StatusViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Configure the cell...
-		let status = statuses![indexPath.row] as WBStatus
+		let status = statuses![indexPath.row] as! WBStatus
         
         var style: (hasImage: Bool, hasRetweetedStatus: Bool) = (false, false)
         
@@ -94,30 +99,25 @@ class StatusViewController: UITableViewController {
 
         switch (style) {
         case (false, false):
-			let cell = tableView.dequeueReusableCellWithIdentifier("TextStatusCell") as TextStatusCell
+			let cell = tableView.dequeueReusableCellWithIdentifier("TextStatusCell") as! TextStatusCell
 			cell.status = status
 			return cell
 			
         case (false, true):
-			let cell = tableView.dequeueReusableCellWithIdentifier("RTTextStatusCell") as RTTextStatusCell
+			let cell = tableView.dequeueReusableCellWithIdentifier("RTTextStatusCell") as! RTTextStatusCell
 			cell.status = status
 			return cell
 			
         case (true, false):
-			let cell = tableView.dequeueReusableCellWithIdentifier("ImageStatusCell") as ImageStatusCell
+			let cell = tableView.dequeueReusableCellWithIdentifier("ImageStatusCell") as! ImageStatusCell
 			cell.status = status
 			return cell
 			
         case (true, true):
-			let cell = tableView.dequeueReusableCellWithIdentifier("RTImageStatusCell") as RTImageStatusCell
+			let cell = tableView.dequeueReusableCellWithIdentifier("RTImageStatusCell") as! RTImageStatusCell
 			cell.status = status
 			return cell
-			
-        default :
-            println("5")
         }
-		
-        return UITableViewCell()
     }
 
     // MARK: - UIScrollViewDelegate

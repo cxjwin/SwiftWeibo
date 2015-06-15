@@ -22,42 +22,49 @@ extension String {
     }
     
     func transformText() -> NSTextStorage {
-        var textStorage = NSTextStorage()
+        let textStorage = NSTextStorage()
         
         var objcString: NSString = self;
         
         // emoji
         let regex_emoji = "\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]"
         
-        let exp_emoji = NSRegularExpression(pattern: regex_emoji, options: .CaseInsensitive | .DotMatchesLineSeparators, error: nil)
+        let exp_emoji: NSRegularExpression?
+        do {
+            exp_emoji = try NSRegularExpression(pattern: regex_emoji, options: [.CaseInsensitive, .DotMatchesLineSeparators])
+        } catch _ {
+            exp_emoji = nil
+        }
         
-        let emojis = exp_emoji?.matchesInString(objcString, options: .ReportCompletion, range: NSMakeRange(0, objcString.length))
+        let emojis = exp_emoji?.matchesInString(objcString as String, options: .ReportCompletion, range: NSMakeRange(0, objcString.length))
         
         var location: Int = 0
-				
-		for result in emojis as [NSTextCheckingResult] {
-            let range = result.range
-			
-            let subStr = objcString.substringWithRange(NSMakeRange(location, range.location - location))
-            let attSubStr = NSAttributedString(string: subStr)
-            textStorage.appendAttributedString(attSubStr)
-            
-            location = NSMaxRange(range)
-            
-            let emojiKey = objcString.substringWithRange(range)
-            
-            var imageName: String? = emojiDict[emojiKey] as? String
-            
-            if (imageName != nil) {
-                let image = UIImage(named: imageName!)
-                var attachment = NSTextAttachment()
-                attachment.image = image
-                attachment.bounds = CGRectMake(0, -3, 16, 16)
-                var attachmentStr = NSAttributedString(attachment: attachment)
-                textStorage.appendAttributedString(attachmentStr)
-            } else {
-                var emojiStr = NSAttributedString(string: emojiKey)
-                textStorage.appendAttributedString(emojiStr)
+        
+        if let _emojis = emojis {
+            for result in _emojis {
+                let range = result.range
+                
+                let subStr = objcString.substringWithRange(NSMakeRange(location, range.location - location))
+                let attSubStr = NSAttributedString(string: subStr)
+                textStorage.appendAttributedString(attSubStr)
+                
+                location = NSMaxRange(range)
+                
+                let emojiKey = objcString.substringWithRange(range)
+                
+                let imageName: String? = emojiDict[emojiKey] as? String
+                
+                if (imageName != nil) {
+                    let image = UIImage(named: imageName!)
+                    let attachment = NSTextAttachment()
+                    attachment.image = image
+                    attachment.bounds = CGRectMake(0, -3, 16, 16)
+                    let attachmentStr = NSAttributedString(attachment: attachment)
+                    textStorage.appendAttributedString(attachmentStr)
+                } else {
+                    let emojiStr = NSAttributedString(string: emojiKey)
+                    textStorage.appendAttributedString(emojiStr)
+                }
             }
         }
         
@@ -72,14 +79,22 @@ extension String {
         
         // short link
         let regex_http = "http://t.cn/[a-zA-Z0-9]+"
-        let exp_http = NSRegularExpression(pattern: regex_http, options: .CaseInsensitive | .DotMatchesLineSeparators, error: nil)
-        
-        let https = exp_http?.matchesInString(objcString, options: .ReportProgress, range: NSMakeRange(0, objcString.length))
-        
-        for result in https as [NSTextCheckingResult] {
-            let range = result.range
-            textStorage.addAttribute(NSLinkAttributeName, value: objcString.substringWithRange(range), range: range)
+        let exp_http: NSRegularExpression?
+        do {
+            exp_http = try NSRegularExpression(pattern: regex_http, options: [.CaseInsensitive, .DotMatchesLineSeparators])
+        } catch _ {
+            exp_http = nil
         }
+        
+        let https = exp_http?.matchesInString(objcString as String, options: .ReportProgress, range: NSMakeRange(0, objcString.length))
+        
+        if let _https = https {
+            for result in _https {
+                let range = result.range
+                textStorage.addAttribute(NSLinkAttributeName, value: objcString.substringWithRange(range), range: range)
+            }
+        }
+        
         
         return textStorage
     }

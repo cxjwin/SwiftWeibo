@@ -12,17 +12,17 @@ class AvatarView: UIImageView {
     var URLString: String? {
 	didSet {
 		if let _URLString = URLString {
-			var avatarUrl = NSURL(string: _URLString);
+			let avatarUrl = NSURL(string: _URLString);
 			
 			let manager = SDWebImageManager.sharedManager()
-			var cacheImage: UIImage? = manager.imageCache.imageFromDiskCacheForKey(avatarUrl!.absoluteString)
+			let cacheImage: UIImage? = manager.imageCache.imageFromDiskCacheForKey(avatarUrl!.absoluteString)
 			
 			if let _image = cacheImage {
 				self.image = _image
 			} else {
 				self.image = nil
 				
-                var completed = {
+                let completed = {
 					[weak self] (image: UIImage!, error: NSError!, cacheType: SDImageCacheType, finished: Bool, URL: NSURL!) in
                         self!.image = image
 				}

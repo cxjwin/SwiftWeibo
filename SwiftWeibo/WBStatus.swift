@@ -18,17 +18,17 @@ class WBStatus: NSObject {
     var retweetedStatus: WBStatus? = nil;
     
     func fillInDetailsWithJSONObject(info: NSDictionary) {
-        statusId = info["idstr"] as String
-        text = info["text"] as String
-        picURLs = info["pic_urls"] as NSArray
+        statusId = info["idstr"] as! String
+        text = info["text"] as! String
+        picURLs = info["pic_urls"] as! NSArray
 
         user = {
-            let userInfo = info["user"] as NSDictionary
+            let userInfo = info["user"] as! NSDictionary
 
             let _user = WBUser()
-            _user.userId = userInfo["idstr"] as String
-            _user.screenName = userInfo["screen_name"] as String
-            _user.profileImageUrl = userInfo["profile_image_url"] as String
+            _user.userId = userInfo["idstr"] as! String
+            _user.screenName = userInfo["screen_name"] as! String
+            _user.profileImageUrl = userInfo["profile_image_url"] as! String
             
             return _user;
         }()
