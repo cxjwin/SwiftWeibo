@@ -11,7 +11,7 @@ import UIKit
 
 class StatusViewController: UITableViewController {
 
-	var statuses: NSMutableArray?
+    var statuses: Array<WBStatus> = Array<WBStatus>()
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,24 +43,20 @@ class StatusViewController: UITableViewController {
     func fetchData() {
         let path = NSBundle.mainBundle().pathForResource("test_twenty_status", ofType: "json")
         let data = NSData(contentsOfFile: path!)
-        let json: AnyObject?
+        let optionJSONObject: AnyObject?
         do {
-            json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
+            optionJSONObject = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
         } catch _ {
-            json = nil
+            optionJSONObject = nil
         }
         
-        statuses = NSMutableArray()
-        if let _json: NSDictionary = json as? NSDictionary {
-            let array = _json["statuses"] as? NSArray
-            for info in array as! [NSDictionary] {
-                let status: WBStatus = {
-                    let _status = WBStatus()
-                    _status.fillInDetailsWithJSONObject(info)
-                    return _status
-                }()
-                
-                statuses!.addObject(status)
+        if let JSONObject = optionJSONObject as? [String : AnyObject] {
+            let array = JSONObject["statuses"] as? [[String : AnyObject]]
+            for info: [String : AnyObject] in array! {
+                let status = WBStatus(info: info)
+                if status != nil {
+                    statuses.append(status!)
+                }
             }
         }
     }
@@ -76,23 +72,23 @@ class StatusViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return statuses!.count
+        return statuses.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Configure the cell...
-		let status = statuses![indexPath.row] as! WBStatus
+		let status = statuses[indexPath.row]
         
         var style: (hasImage: Bool, hasRetweetedStatus: Bool) = (false, false)
         
         if status.retweetedStatus != nil {
             style.hasRetweetedStatus = true
             let _status = status.retweetedStatus!
-            if _status.picURLs.count > 0 {
+            if !_status.picURLs.isEmpty {
                 style.hasImage = true
             }
         } else {
-            if status.picURLs.count > 0 {
+            if !status.picURLs.isEmpty {
                 style.hasImage = true
             }
         }

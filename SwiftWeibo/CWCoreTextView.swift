@@ -122,7 +122,6 @@ class CWCoreTextView: UIView, NSLayoutManagerDelegate, UIGestureRecognizerDelega
         }
     }
     
-
     override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         if (touchRange.location != NSNotFound) {
             touchRange = kCWInvalidRange

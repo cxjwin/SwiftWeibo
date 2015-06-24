@@ -17,17 +17,16 @@ class AvatarView: UIImageView {
 			let manager = SDWebImageManager.sharedManager()
 			let cacheImage: UIImage? = manager.imageCache.imageFromDiskCacheForKey(avatarUrl!.absoluteString)
 			
-			if let _image = cacheImage {
-				self.image = _image
+			if cacheImage != nil {
+				self.image = cacheImage!
 			} else {
 				self.image = nil
-				
-                let completed = {
-					[weak self] (image: UIImage!, error: NSError!, cacheType: SDImageCacheType, finished: Bool, URL: NSURL!) in
+                if avatarUrl != nil {
+                    manager.downloadImageWithURL(avatarUrl, options: .CacheMemoryOnly, progress: nil,
+                      completed: { [weak self] (image: UIImage!, error: NSError!, cacheType: SDImageCacheType, finished: Bool, URL: NSURL!) in
                         self!.image = image
-				}
-				
-                manager.downloadImageWithURL(avatarUrl!, options: .CacheMemoryOnly, progress: nil, completed: completed)
+                    })
+                }
             }
 		}
 	}
@@ -35,7 +34,6 @@ class AvatarView: UIImageView {
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
         backgroundColor = UIColor.yellowColor()
     }
 

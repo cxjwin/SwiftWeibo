@@ -9,39 +9,33 @@
 import Foundation
 import UIKit
 
-class WBStatus: NSObject {
-    var statusId: String = ""
-    var text: String = ""
-    var picURLs: NSArray! = nil
+class WBStatus {
+    let statusID: String!
+    let text: String!
 
-    var user: WBUser! = nil
-    var retweetedStatus: WBStatus? = nil;
+    let picURLs: Array<[String : String]>!
+    let user: WBUser!
     
-    func fillInDetailsWithJSONObject(info: NSDictionary) {
-        statusId = info["idstr"] as! String
-        text = info["text"] as! String
-        picURLs = info["pic_urls"] as! NSArray
-
-        user = {
-            let userInfo = info["user"] as! NSDictionary
-
-            let _user = WBUser()
-            _user.userId = userInfo["idstr"] as! String
-            _user.screenName = userInfo["screen_name"] as! String
-            _user.profileImageUrl = userInfo["profile_image_url"] as! String
-            
-            return _user;
-        }()
+    var retweetedStatus: WBStatus!
+    
+    init?(info: [String : AnyObject]) {
+        self.statusID = info["idstr"] as? String
+        self.text = info["text"] as? String
         
-        retweetedStatus = {
-            let _info: NSDictionary? = info.objectForKey("retweeted_status") as? NSDictionary
-            if _info != nil {
-                let _status = WBStatus()
-                _status.fillInDetailsWithJSONObject(_info!)
-                return _status
+        let userInfo = info["user"] as? [String : AnyObject] ?? [String : AnyObject]()
+        self.user = WBUser(info: userInfo)
+        
+        self.picURLs = info["pic_urls"] as? Array<[String : String]> ?? []
+        
+        self.retweetedStatus = {
+            let optionRetweetedStatusInfo = info["retweeted_status"] as? [String : AnyObject]
+            if let retweetedStatusInfo = optionRetweetedStatusInfo {
+                return WBStatus(info: retweetedStatusInfo)
             } else {
                 return nil
             }
-        }()
+        }()        
+        
+        guard let idstr = info["idstr"] as? String where !idstr.isEmpty else { return nil }
     }
 }

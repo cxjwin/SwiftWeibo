@@ -10,11 +10,9 @@ import UIKit
 
 class StatusImageView: UIView {
 
-	var picURLs: NSArray? {
+    var picURLs: Array<[String : String]> = [] {
 		didSet {
-			if let _ = picURLs {
-				
-			}
+			
 		}
 	}
 	

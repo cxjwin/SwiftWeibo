@@ -7,10 +7,16 @@
 //
 
 import Foundation
-import UIKit
 
-class WBUser: NSObject {
-    var userId: String = ""
-    var profileImageUrl: String = ""
-    var screenName: String = ""
+struct WBUser {
+    let userID: String
+    let profileImageUrl: String
+    let screenName: String
+    
+    init?(info: [String : AnyObject]) {
+        guard let idstr = info["idstr"] as? String where !idstr.isEmpty else { return nil }
+        userID = idstr
+        profileImageUrl = info["profile_image_url"] as? String ?? ""
+        screenName  = info["screen_name"] as? String ?? ""
+    }
 }

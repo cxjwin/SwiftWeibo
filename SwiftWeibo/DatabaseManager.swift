@@ -9,23 +9,17 @@
 import UIKit
 
 class DatabaseManager: NSObject {
-    var databaseName: String = "weibo.db"
-    var tableNames: [String] = ["login_account", "statuses_data"]
+    /// Singleton
+    static let defaultManager = DatabaseManager()
+    
+    let tableNames: [String] = ["login_account", "statuses_data"]
     
     var database: FMDatabase
     
-    class var defaultManager: DatabaseManager {
-        struct Singleton {
-            private static var manager = DatabaseManager()
-        }
-        
-        return Singleton.manager;
-    }
-    
     override init() {
         let documentPaths = NSSearchPathForDirectoriesInDomains(.DocumentationDirectory, .UserDomainMask, true)
-        let documentsDir: String = documentPaths[0] as String
-        let databasePath = documentsDir.stringByAppendingPathComponent(documentsDir)
+        let documentDir: String = documentPaths[0] as String
+        let databasePath = documentDir.stringByAppendingPathComponent("weibo.db")
         database = FMDatabase(path: databasePath)
         
         super.init()
