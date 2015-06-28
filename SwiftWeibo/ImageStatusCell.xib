@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8121.20" systemVersion="14E36b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.16"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="317" height="268"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kgS-GL-3ht" id="ebF-Mb-blg">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="317" height="267"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rj7-cI-ULE" customClass="AvatarView" customModule="SwiftWeibo" customModuleProvider="target">
@@ -22,13 +22,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FhE-Kd-GXd">
-                        <rect key="frame" x="64" y="9" width="244" height="21"/>
+                        <rect key="frame" x="64" y="9" width="245" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="59" translatesAutoresizingMaskIntoConstraints="NO" id="aO6-EC-1Mo" customClass="CWCoreTextView" customModule="SwiftWeibo" customModuleProvider="target">
-                        <rect key="frame" x="8" y="64" width="300" height="78"/>
+                        <rect key="frame" x="8" y="64" width="301" height="78"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5YP-QO-BDZ">
@@ -42,15 +42,15 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="aO6-EC-1Mo" firstAttribute="top" secondItem="Rj7-cI-ULE" secondAttribute="bottom" constant="8" id="9u1-OF-9qq"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="FhE-Kd-GXd" secondAttribute="trailing" constant="1" id="HVM-9r-K92"/>
-                    <constraint firstItem="FhE-Kd-GXd" firstAttribute="top" secondItem="ebF-Mb-blg" secondAttribute="topMargin" constant="1" id="JBQ-4Y-hWB"/>
+                    <constraint firstItem="FhE-Kd-GXd" firstAttribute="trailing" secondItem="ebF-Mb-blg" secondAttribute="trailingMargin" id="HVM-9r-K92" userLabel="trailingMargin = Name Label.trailing"/>
+                    <constraint firstItem="FhE-Kd-GXd" firstAttribute="top" secondItem="ebF-Mb-blg" secondAttribute="topMargin" constant="1" id="JBQ-4Y-hWB" userLabel="Name Label.top = topMargin"/>
                     <constraint firstItem="FhE-Kd-GXd" firstAttribute="leading" secondItem="Rj7-cI-ULE" secondAttribute="trailing" constant="8" id="T1c-l3-1le"/>
                     <constraint firstItem="aO6-EC-1Mo" firstAttribute="leading" secondItem="ebF-Mb-blg" secondAttribute="leadingMargin" id="cBU-gW-nT6"/>
                     <constraint firstItem="5YP-QO-BDZ" firstAttribute="top" secondItem="aO6-EC-1Mo" secondAttribute="bottom" constant="12" id="jyh-M4-kQG"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="5YP-QO-BDZ" secondAttribute="bottom" constant="5" id="koR-HK-8Ff"/>
+                    <constraint firstItem="5YP-QO-BDZ" firstAttribute="bottom" secondItem="ebF-Mb-blg" secondAttribute="bottomMargin" constant="-5" id="koR-HK-8Ff"/>
                     <constraint firstItem="Rj7-cI-ULE" firstAttribute="leading" secondItem="ebF-Mb-blg" secondAttribute="leadingMargin" id="lZM-GF-1Pj"/>
                     <constraint firstAttribute="centerX" secondItem="5YP-QO-BDZ" secondAttribute="centerX" constant="0.5" id="oyx-7y-Q6c"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="aO6-EC-1Mo" secondAttribute="trailing" constant="1" id="whw-JL-MLM"/>
+                    <constraint firstItem="aO6-EC-1Mo" firstAttribute="trailing" secondItem="ebF-Mb-blg" secondAttribute="trailingMargin" id="whw-JL-MLM" userLabel="trailingMargin = Text View.trailing"/>
                     <constraint firstItem="Rj7-cI-ULE" firstAttribute="top" secondItem="ebF-Mb-blg" secondAttribute="topMargin" id="yhn-O2-hAS"/>
                 </constraints>
             </tableViewCellContentView>

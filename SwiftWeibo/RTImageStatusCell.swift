@@ -14,7 +14,7 @@ class RTImageStatusCell: UITableViewCell {
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var textView: CWCoreTextView!
 	@IBOutlet weak var rtTextView: CWCoreTextView!
-	@IBOutlet weak var picView: UIView!
+	@IBOutlet weak var picView: StatusImageView!
 	
 	var status: WBStatus! {
 		didSet {
@@ -65,6 +65,14 @@ class RTImageStatusCell: UITableViewCell {
 				
 				rtTextView.textStorage = storage
 			}
+            
+            if status.picURLs.isEmpty {
+                if let retweetedStatus = status.retweetedStatus {
+                    picView.picURLs = retweetedStatus.picURLs
+                }
+            } else {
+                picView.picURLs = status.picURLs
+            }
 		}
 	}
 	

@@ -20,7 +20,7 @@ class DatabaseManager: NSObject {
         let documentPaths = NSSearchPathForDirectoriesInDomains(.DocumentationDirectory, .UserDomainMask, true)
         let documentDir: String = documentPaths[0] as String
         let databasePath = documentDir.stringByAppendingPathComponent("weibo.db")
-        database = FMDatabase(path: databasePath)
+        self.database = FMDatabase(path: databasePath)
         
         super.init()
     }

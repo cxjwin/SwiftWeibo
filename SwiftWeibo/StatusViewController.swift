@@ -23,7 +23,7 @@ class StatusViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
 		
 		tableView.rowHeight = UITableViewAutomaticDimension
-		tableView.estimatedRowHeight = 44.0
+        tableView.estimatedRowHeight = 300
 		
 		tableView.registerNib(UINib(nibName: "TextStatusCell", bundle: nil), forCellReuseIdentifier: "TextStatusCell")
 		tableView.registerNib(UINib(nibName: "RTTextStatusCell", bundle: nil), forCellReuseIdentifier: "RTTextStatusCell")

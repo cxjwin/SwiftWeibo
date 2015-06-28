@@ -44,7 +44,7 @@ class TextStatusCell: UITableViewCell {
 				paragraphStyle.paragraphSpacingBefore = 0
 				
 				return paragraphStyle.copy() as! NSParagraphStyle
-				}()
+                }()
 			
 			let range = NSMakeRange(0, storage.length)
 			storage.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(16), range: range)
